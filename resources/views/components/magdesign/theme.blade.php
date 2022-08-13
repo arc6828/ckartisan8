@@ -9,7 +9,7 @@
     <link href="{{ url('/magdesign/css2.css') }}" rel="stylesheet">
     <link href="{{ url('/magdesign/all.css') }}" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" rel="stylesheet">
-    
+
     <title>CKARTISAN - Build anything</title>
     {{-- <script defer="" src="url('/magdesign/s.js')"></script> --}}
 
@@ -30,11 +30,16 @@
             <div class="site-navigation">
                 <div class="row">
                     <div class="col-md-6 text-center order-1 order-md-2 mb-3 mb-md-0">
-                        <a href="index.html" class="logo m-0 text-uppercase">ckartisan</a>
+                        <a href="{{ url('/') }}" class="logo m-0 text-uppercase">ckartisan</a>
                     </div>
                     <div class="col-md-3 order-3 order-md-1">
                         <form action="#" class="search-form">
-                            <span class="icon-search2"></span>
+                            <span class="fa fa-search "
+                                style=" position: absolute;
+                            top: 10px;
+                            left: 15px;
+                            color: #ccc;
+                            font-size: 16px;"></span>
                             <input type="search" class="form-control" placeholder="Search...">
                         </form>
                     </div>
@@ -57,8 +62,8 @@
                     </div>
                 </div>
                 <ul class="js-clone-nav d-none d-lg-inline-none text-start site-menu float-end">
-                    <li class="active"><a href="index.html">Home</a></li>
-                    <li class="has-children">
+                    <li class="active"><a href="{{ url('/') }}">Home</a></li>
+                    {{-- <li class="has-children">
                         <a href="categories.html">Categories</a>
                         <ul class="dropdown">
                             <li><a href="#">Travel</a></li>
@@ -74,11 +79,9 @@
                                 </ul>
                             </li>
                         </ul>
-                    </li>
-                    <li><a href="#">Travel</a></li>
-                    <li><a href="#">Food</a></li>
-                    <li><a href="#">Technology</a></li>
-                    <li><a href="#">Business</a></li>
+                    </li> --}}
+                    <li><a href="{{ url('/timeline') }}">Timeline</a></li>
+                    <li><a href="{{ url('/about') }}">About me</a></li>
                 </ul>
             </div>
         </div>
