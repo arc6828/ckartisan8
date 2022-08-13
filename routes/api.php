@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\MediumController;
 use App\Http\Controllers\API\PublicationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,3 +22,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::apiResource('/publication', PublicationController::class);
+Route::prefix('medium')->group(function () {
+    Route::get('/feed/{publication?}', [MediumController::class, 'feed']);
+    Route::get('/feed/{publication?}/tagged/{tagname?}', [MediumController::class, 'feed']);
+    // tagged/[tag-name]
+    Route::get('/ckartisan', [MediumController::class, 'ckartisan']);
+    Route::get('/ckartisan2', [MediumController::class, 'ckartisan2']);
+});
