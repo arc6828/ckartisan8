@@ -20,6 +20,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class , "home"]);
 
+Route::get('/about', function () {
+    return view('comingsoon');
+});
+Route::get('/timeline', function () {
+    return view('comingsoon');
+});
 
 Route::get('/theme', function () {
     return view('components/magdesign/theme');
