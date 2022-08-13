@@ -14,11 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('/home', [HomeController::class , "home"]);
+Route::get('/', [HomeController::class , "home"]);
 
 
 Route::get('/theme', function () {
