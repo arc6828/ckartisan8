@@ -9,5 +9,4 @@
         <img src="{{ url('/img/comingsoon.jpg') }}" height="500" />
 
     </div>
-    </div>
 </x-magdesign.theme>

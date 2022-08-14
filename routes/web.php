@@ -27,6 +27,10 @@ Route::get('/timeline', function () {
     return view('comingsoon');
 });
 
+Route::get('/cookies-policy', function () {
+    return view('cookies-policy');
+});
+
 Route::get('/theme', function () {
     return view('components/magdesign/theme');
 });

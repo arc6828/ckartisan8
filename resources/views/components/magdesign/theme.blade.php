@@ -9,9 +9,37 @@
     <link href="{{ url('/magdesign/css2.css') }}" rel="stylesheet">
     <link href="{{ url('/magdesign/all.css') }}" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" rel="stylesheet">
-
+    <link href="img/css.png" rel="icon">
     <title>CKARTISAN - Build anything</title>
     {{-- <script defer="" src="url('/magdesign/s.js')"></script> --}}
+
+    <link href="https://fonts.googleapis.com/css?family=Prompt" rel="stylesheet">
+    <style>
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        nav,
+        .nav,
+        .menu,
+        button,
+        .button,
+        .btn,
+        .price,
+        ._heading,
+        .wp-block-pullquote blockquote,
+        blockquote,
+        label,
+        legend,
+        .card-header,
+        th,
+        li, a:not(.logo){
+            font-family: "Prompt", "Open Sans script=all rev=1" !important;
+            font-weight: 500 !important;
+        }
+    </style>
 
 </head>
 
@@ -133,9 +161,8 @@
                             </script> All rights reserved
                         </p>
                         <div class="d-block">
-                            <a href="#" class="m-2">Terms &amp;
-                                Conditions</a>/
-                            <a href="#" class="m-2">Privacy Policy</a>
+                            <a href="#" class="m-2">Terms & Conditions</a>/
+                            <a href="{{ url('/cookies-policy') }}" class="m-2">Cookies Policy</a>
                         </div>
                     </div>
                 </div>
@@ -150,6 +177,12 @@
         </div>
     </div>
 
+    <!-- Cookie Consent by https://www.cookiewow.com -->
+    <script type="text/javascript" src="https://cookiecdn.com/cwc.js"></script>
+    <script id="cookieWow" type="text/javascript" src="https://cookiecdn.com/configs/RR7vKahqPayAT4PfkSquBZmv"
+        data-cwcid="RR7vKahqPayAT4PfkSquBZmv"></script>
+
+    {{-- theme script --}}
     <script src="{{ url('/magdesign/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ url('/magdesign/tiny-slider.js') }}"></script>
     <script src="{{ url('/magdesign/all.js') }}"></script>
@@ -170,6 +203,20 @@
     <script>
         eval(mod_pagespeed_GIrE68D1a2);
     </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H2J4X8W9KR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-H2J4X8W9KR');
+    </script>
+
 </body>
 
 </html>
