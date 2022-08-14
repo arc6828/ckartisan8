@@ -28,8 +28,9 @@ class Medium extends Model
             $fileContents = str_replace("</content:encoded>", "</contentEncoded>", $fileContents);
             $fileContents = str_replace("<dc:creator>", "<creator>", $fileContents);
             $fileContents = str_replace("</dc:creator>", "</creator>", $fileContents);
-            $simpleXml = simplexml_load_string($fileContents, "SimpleXMLElement", LIBXML_NOCDATA);
-            $data = $simpleXml;
+            $simpleXml = simplexml_load_string($fileContents, "SimpleXMLElement", LIBXML_NOCDATA);            
+            $data = json_encode($simpleXml, JSON_UNESCAPED_UNICODE);
+            $data = json_decode($data);
             //ENHANCED DATA
             for ($i = 0; $i < count($data->channel->item); $i++) {
                 $item = $data->channel->item[$i];
