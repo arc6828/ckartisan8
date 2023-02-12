@@ -13,7 +13,8 @@ class TambonController extends Controller
         $provinces = Tambon::select('province')
             ->distinct()
             ->get();
-        return $provinces;
+        // return $provinces;
+        return json_encode($provinces, JSON_UNESCAPED_UNICODE);
     }
     public function getAmphoes(Request $request)
     {
@@ -22,7 +23,8 @@ class TambonController extends Controller
             ->where('province', 'like', "%$province%")
             ->distinct()
             ->get();
-        return $amphoes;
+        // return $amphoes;
+        return json_encode($amphoes, JSON_UNESCAPED_UNICODE);
     }
     public function getTambons(Request $request)
     {
@@ -33,7 +35,8 @@ class TambonController extends Controller
             ->where('amphoe', 'like', "%$amphoe%")
             ->distinct()
             ->get();
-        return $tambons;
+        // return $tambons;
+        return json_encode($tambons, JSON_UNESCAPED_UNICODE);
     }
     public function getZipcodes(Request $request)
     {
@@ -45,6 +48,8 @@ class TambonController extends Controller
             ->where('amphoe', $amphoe)
             ->where('tambon', $tambon)
             ->get();
-        return $zipcodes;
+        // return $zipcodes;
+        
+        return json_encode($zipcodes, JSON_UNESCAPED_UNICODE);
     }
 }
