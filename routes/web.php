@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Models\Tambon;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,4 +34,11 @@ Route::get('/cookies-policy', function () {
 
 Route::get('/theme', function () {
     return view('components/magdesign/theme');
+});
+
+Route::get('/tambon', function () {
+    $provinces = Tambon::select('province')->distinct()->get();
+    $amphoes = Tambon::select('amphoe')->distinct()->get();
+    $tambons = Tambon::select('tambon')->distinct()->get();
+    return view("tambon/index", compact('provinces','amphoes','tambons'));
 });

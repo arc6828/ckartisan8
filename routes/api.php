@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\MediumController;
 use App\Http\Controllers\API\PublicationController;
+use App\Http\Controllers\API\TambonController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,3 +30,9 @@ Route::prefix('medium')->group(function () {
     Route::get('/ckartisan', [MediumController::class, 'ckartisan']);
     Route::get('/ckartisan2', [MediumController::class, 'ckartisan2']);
 });
+
+// PROVINCE - AMPHOE - TAMBON
+Route::get('/provinces', [ TambonController::class , 'getProvinces' ]);
+Route::get('/amphoes', [TambonController::class , 'getAmphoes' ]);
+Route::get('/tambons', [ TambonController::class , 'getTambons' ]);
+Route::get('/zipcodes', [TambonController::class, 'getZipcodes'] );
