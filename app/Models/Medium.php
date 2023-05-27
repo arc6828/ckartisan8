@@ -18,6 +18,7 @@ class Medium extends Model
         if (!empty($tagname)) {
             $url = "https://medium.com/feed/{$publication}/tagged/{$tagname}";
         }
+        // error_log($url);
 
         $data = cache()->remember($url, now()->addDay(), function () use ($url) {
             //FETCH DATA
@@ -32,6 +33,9 @@ class Medium extends Model
             $data = json_encode($simpleXml, JSON_UNESCAPED_UNICODE);
             $data = json_decode($data);
             //ENHANCED DATA
+            if(! is_array($data->channel->item)){
+                $data->channel->item = [$data->channel->item];
+            }
             for ($i = 0; $i < count($data->channel->item); $i++) {
                 $item = $data->channel->item[$i];
                 // echo $item->contentEncoded;
