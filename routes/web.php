@@ -42,3 +42,12 @@ Route::get('/tambon', function () {
     $tambons = Tambon::select('tambon')->distinct()->get();
     return view("tambon/index", compact('provinces','amphoes','tambons'));
 });
+
+
+Route::get('/cache', function () {
+    $provinces = Tambon::select('province')->distinct()->get();
+    $amphoes = Tambon::select('amphoe')->distinct()->get();
+    $tambons = Tambon::select('tambon')->distinct()->get();
+    return view("tambon/index", compact('provinces','amphoes','tambons'));
+});
+
