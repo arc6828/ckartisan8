@@ -39,7 +39,7 @@ class LineMessageAPI extends Model
         $string_json = file_get_contents($template_path);
         $message = [
             "type" => "flex",
-            "altText" => "This is a flex carousel template",
+            "altText" => "10 สถานที่แนะนำที่ใกล้คุณ",
             "contents" => json_decode($string_json, true),
         ];
         
@@ -51,7 +51,7 @@ class LineMessageAPI extends Model
         $string_json = file_get_contents($template_path);
         $message = [
             "type" => "flex",
-            "altText" => "This is a flex template",
+            "altText" => "สถานที่ใกล้คุณ",
             "contents" => json_decode($string_json, true),
         ];
         
