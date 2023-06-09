@@ -1,6 +1,6 @@
 {
     "type": "carousel",
-    "columns": [
+    "contents": [
         {
             "type": "bubble",
             "size": "micro",
