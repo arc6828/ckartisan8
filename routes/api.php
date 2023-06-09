@@ -27,6 +27,8 @@ Route::apiResource('/publication', PublicationController::class);
 Route::prefix('medium')->group(function () {
     Route::get('/feed/{publication?}', [MediumController::class, 'feed']);
     Route::get('/feed/{publication?}/tagged/{tagname?}', [MediumController::class, 'feed']);
+    Route::get('/feednocache/{publication?}', [MediumController::class, 'feedNoCache']);
+    Route::get('/feednocache/{publication?}/tagged/{tagname?}', [MediumController::class, 'feedNoCache']);
     // tagged/[tag-name]
     Route::get('/ckartisan', [MediumController::class, 'ckartisan']);
     Route::get('/ckartisan2', [MediumController::class, 'ckartisan2']);

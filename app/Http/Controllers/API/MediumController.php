@@ -14,4 +14,10 @@ class MediumController extends Controller
         $data = Medium::fetch($publication, $tagname);
         return json_encode($data, JSON_UNESCAPED_UNICODE);
     }
+
+    public function feedNoCache($publication = "ckartisan", $tagname = "")
+    {
+        $data = Medium::fetchNoCache($publication, $tagname);
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
+    }
 }
