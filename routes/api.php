@@ -4,6 +4,7 @@ use App\Http\Controllers\API\MediumController;
 use App\Http\Controllers\API\PublicationController;
 use App\Http\Controllers\API\TambonController;
 use App\Http\Controllers\API\WongnaiController;
+use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -43,3 +44,25 @@ Route::get('/zipcodes', [TambonController::class, 'getZipcodes'] );
 // https://3166-202-29-39-124.ngrok-free.app
 Route::apiResource('/mywongnai/webhook', WongnaiController::class);
 // Route::post('/mywongnai/webhook', [WongnaiController::class, 'store'] );
+
+
+Route::get('/article/tagged/{tagname}', function($tagname){
+    $articles = Article::where('category','like',"%$tagname%")->get();
+    return json_encode($articles, JSON_UNESCAPED_UNICODE);
+});
+
+Route::get('/article/{id}', function($id){
+    
+    $article = Article::findOrFail($id);
+    $latest = Article::orderBy('pubDate','desc')->limit(5)->get();
+    $tag = json_decode($article->category)[0];
+    $tagged = Article::where('category','like',"%$tag%")->orderBy('pubDate','desc')->limit(3)->get();
+    $article_set = [
+        "article" => $article ,
+        "latest" => $latest ,
+        "tagged" => $tagged ,
+    ];
+    return json_encode($article_set, JSON_UNESCAPED_UNICODE);
+});
+
+

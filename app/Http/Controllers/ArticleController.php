@@ -58,9 +58,9 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $requestData = $request->all();
-        
+
         Article::create($requestData);
 
         return redirect('article')->with('flash_message', 'Article added!');
@@ -75,9 +75,16 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        $article = Article::findOrFail($id);
+        // $article = Article::findOrFail($id);
+        $url = url("api/article/" . $id);
+        // echo $url;
 
-        return view('article.show', compact('article'));
+        $article_set = json_decode(file_get_contents($url));
+        $article = $article_set->article;
+        $latest = $article_set->latest;
+        $tagged = $article_set->tagged;
+
+        return view('article.show', compact('article','latest','tagged'));
     }
 
     /**
@@ -104,9 +111,9 @@ class ArticleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $requestData = $request->all();
-        
+
         $article = Article::findOrFail($id);
         $article->update($requestData);
 

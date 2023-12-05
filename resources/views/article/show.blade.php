@@ -1,36 +1,109 @@
 <x-bootstrap title="">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">Article {{ $article->id }}</div>
-                    <div class="card-body">
-
-                        <a href="{{ url('/article') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
-                        <a href="{{ url('/article/' . $article->id . '/edit') }}" title="Edit Article"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
-
-                        <form method="POST" action="{{ url('article' . '/' . $article->id) }}" accept-charset="UTF-8" style="display:inline">
-                            {{ method_field('DELETE') }}
-                            {{ csrf_field() }}
-                            <button type="submit" class="btn btn-danger btn-sm" title="Delete Article" onclick="return confirm('Confirm delete?')"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
-                        </form>
-                        <br/>
-                        <br/>
-
-                        <div class="table-responsive">
-                            <table class="table">
-                                <tbody>
-                                    <tr>
-                                        <th>ID</th><td>{{ $article->id }}</td>
-                                    </tr>
-                                    <tr><th> Title </th><td> {{ $article->title }} </td></tr><tr><th> Link </th><td> {{ $article->link }} </td></tr><tr><th> Guid </th><td> {{ $article->guid }} </td></tr><tr><th> Category </th><td> {{ $article->category }} </td></tr><tr><th> Creator </th><td> {{ $article->creator }} </td></tr><tr><th> PubDate </th><td> {{ $article->pubDate }} </td></tr><tr><th> ContentEncoded </th><td> {{ $article->contentEncoded }} </td></tr><tr><th> Image Url </th><td> {{ $article->image_url }} </td></tr><tr><th> First Paragraph </th><td> {{ $article->first_paragraph }} </td></tr><tr><th> Credit </th><td> {{ $article->credit }} </td></tr>
-                                </tbody>
-                            </table>
+    <style>
+        .container img {
+            width: 100%;
+        }
+    </style>
+    <section>
+        <div class="bg-dark text-white py-4">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h1>{{ $article->title }}</h1>
+                        <label class="h4">{{ $article->creator }}</label>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-4">
+                            <label class="h3">บทความ</label>
+                            <label class="h5">หลักสูตรวิทยาการคอมพิวเตอร์</label>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <section class="">
+        <div class="container">
+            <br />
+            <div class="row my-4">
+                <div class="col-md-12">
+                    <label class="h6">วันที่โพสต์ {{ $article->pubDate }}</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <div>
+                        @foreach (json_decode($article->category) as $c)
+                            <span class="badge rounded-pill text-bg-light">{{ $c }}</span>
+                        @endforeach
+                    </div>
+                    <div>
+                        <?= html_entity_decode($article->contentEncoded) ?>
+                    </div>
+                    {{-- <div> {{ html_entity_decode($article->contentEncoded) }} </div> --}}
+
+                    <div>
+                        @foreach (json_decode($article->category) as $c)
+                            <span class="badge rounded-pill text-bg-light">{{ $c }}</span>
+                        @endforeach
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="px-4 border-start">
+                        <h2 class="h4">บทความล่าสุด</h2>
+
+                        {{-- <div class="row row-cols-1 row-cols-md-2 g-4"> --}}
+                        <div class="row g-4">
+                            @foreach ($latest as $item)
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <img src="{{ $item->image_url }}" class="card-img-top"
+                                            alt="{{ $item->title }}">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ $item->title }}</h5>
+                                            <p class="card-text">{{ $item->creator }}</p>
+                                            <p class="card-text">{{ $item->pubDate }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+    <br />
+    <section>
+        <div class="container">
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <h2 class="h4">บทความอื่นๆ</h2>
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3  row-cols-xl-4 g-4">
+                        {{-- <div class="row g-4"> --}}
+                        @foreach ($tagged as $item)
+                            <div class="col">
+                                <div class="card h-100">
+                                    <img src="{{ $item->image_url }}" class="card-img-top" alt="{{ $item->title }}">
+                                    <div class="card-body">
+                                        <h6 class="card-title">{{ mb_substr($item->title, 0, 50) }}</h6>
+                                        
+                                        <p class="card-text">{{ $item->creator }}</p>
+                                        <p class="card-text">{{ $item->pubDate }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </x-bootstrap>

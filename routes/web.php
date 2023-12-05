@@ -2,7 +2,10 @@
 
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\HomeController;
+use App\Models\Article;
+use App\Models\Medium;
 use App\Models\Tambon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('/', [HomeController::class , "home"]);
+Route::get('/', [HomeController::class, "home"]);
 
 Route::get('/about', function () {
     return view('comingsoon');
@@ -41,7 +44,7 @@ Route::get('/tambon', function () {
     $provinces = Tambon::select('province')->distinct()->get();
     $amphoes = Tambon::select('amphoe')->distinct()->get();
     $tambons = Tambon::select('tambon')->distinct()->get();
-    return view("tambon/index", compact('provinces','amphoes','tambons'));
+    return view("tambon/index", compact('provinces', 'amphoes', 'tambons'));
 });
 
 
@@ -49,9 +52,42 @@ Route::get('/cache', function () {
     $provinces = Tambon::select('province')->distinct()->get();
     $amphoes = Tambon::select('amphoe')->distinct()->get();
     $tambons = Tambon::select('tambon')->distinct()->get();
-    return view("tambon/index", compact('provinces','amphoes','tambons'));
+    return view("tambon/index", compact('provinces', 'amphoes', 'tambons'));
 });
 
 
 // Route::resource('article', 'ArticleController');
 Route::resource('article', ArticleController::class);
+
+
+Route::get('scraping/medium-feed', function () {
+    return view("scraping/medium-feed");
+})->name("scraping.medium-feed");
+
+Route::post('scraping/medium-feed', function (Request $request) {
+    $publication = $request->get('publication');
+    $tagname = $request->get('tagname', "");
+
+    $data = Medium::fetch($publication, $tagname);
+
+    foreach ($data->channel->item as $item) {
+        Article::firstOrCreate(
+            ['guid' => $item->guid],
+            [
+                'title' => $item->title,
+                'link' => $item->link,
+                // 'guid' => $item->guid,
+                'category' => json_encode($item->category, JSON_UNESCAPED_UNICODE),
+                'creator' => $item->creator,
+                'pubDate' => date("Y-m-d H:i:s", strtotime($item->pubDate)),
+                'contentEncoded' => $item->contentEncoded,
+                'image_url' => $item->image_url,
+                'first_paragraph' => $item->first_paragraph,
+                // 'credit' => '',
+            ]
+        );
+        // break;
+    }
+
+    return redirect()->route("scraping.medium-feed");
+})->name("scraping.medium-feed.store");

@@ -24,7 +24,7 @@ class CreateArticlesTable extends Migration
             $table->timestamp('pubDate')->nullable();
             $table->text('contentEncoded')->nullable();
             $table->string('image_url')->nullable();
-            $table->string('first_paragraph',512)->nullable();
+            $table->string('first_paragraph',1024)->nullable();
             $table->string('credit')->nullable();
         });
     }
