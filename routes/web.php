@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\HomeController;
 use App\Models\Tambon;
 use Illuminate\Support\Facades\Route;
@@ -51,3 +52,6 @@ Route::get('/cache', function () {
     return view("tambon/index", compact('provinces','amphoes','tambons'));
 });
 
+
+// Route::resource('article', 'ArticleController');
+Route::resource('article', ArticleController::class);

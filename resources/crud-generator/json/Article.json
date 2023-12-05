@@ -1,0 +1,14 @@
+{
+    "fields": [
+        { "name": "title", "type": "string" },
+        { "name": "link", "type": "string" },
+        { "name": "guid", "type": "string" },
+        { "name": "category", "type": "string" },
+        { "name": "creator", "type": "string" },
+        { "name": "pubDate", "type": "timestamp" },
+        { "name": "contentEncoded", "type": "text" },
+        { "name": "image_url", "type": "string" },
+        { "name": "first_paragraph", "type": "string" },
+        { "name": "credit", "type": "string" }
+    ]
+}
