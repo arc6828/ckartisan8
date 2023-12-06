@@ -46,7 +46,7 @@ Route::apiResource('/mywongnai/webhook', WongnaiController::class);
 // Route::post('/mywongnai/webhook', [WongnaiController::class, 'store'] );
 
 Route::get('/article', function(){
-    $articles = Article::get();
+    $articles = Article::whereNotNull('credit')->get();
     return json_encode($articles, JSON_UNESCAPED_UNICODE);
 });
 
@@ -58,9 +58,9 @@ Route::get('/article/tagged/{tagname}', function($tagname){
 Route::get('/article/{id}', function($id){
     
     $article = Article::findOrFail($id);
-    $latest = Article::orderBy('pubDate','desc')->limit(5)->get();
+    $latest = Article::orderBy('pubDate','desc')->whereNotNull('credit')->limit(5)->get();
     $tag = json_decode($article->category)[0];
-    $tagged = Article::where('category','like',"%$tag%")->orderBy('pubDate','desc')->limit(3)->get();
+    $tagged = Article::where('category','like',"%$tag%")->orderBy('pubDate','desc')->whereNotNull('credit')->limit(3)->get();
     $teacher = $article->teacher;
     $article_set = [
         "article" => $article ,
