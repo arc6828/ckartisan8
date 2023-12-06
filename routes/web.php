@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TeacherController;
 use App\Models\Article;
 use App\Models\Medium;
 use App\Models\Tambon;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -78,7 +80,7 @@ Route::post('scraping/medium-feed', function (Request $request) {
         }else{
             $item->category = json_encode($item->category, JSON_UNESCAPED_UNICODE);
         }
-        Article::firstOrCreate(
+        Article::updateOrCreate(
             ['guid' => $item->guid],
             [
                 'title' => $item->title,
@@ -98,3 +100,31 @@ Route::post('scraping/medium-feed', function (Request $request) {
 
     return redirect()->route("scraping.medium-feed");
 })->name("scraping.medium-feed.store");
+
+Route::resource('teacher', TeacherController::class);
+
+Route::get('scraping/teacher', function () {
+    $data = json_decode(file_get_contents("http://cs.vru.ac.th/json/teacher.json"));
+    $teachers = $data ->people;
+
+
+    foreach ($teachers as $item) {
+        
+        Teacher::updateOrCreate(
+            ['email' => $item->email],
+            [
+                'name' => $item->name,
+                'education' => $item->education,
+                'role' => $item->role,
+                // 'email' => $item->email,
+                'phone' => $item->phone,
+                'image' => $item->image,
+                'office' => $item->office
+            ]
+        );
+        // break;
+    }
+    echo "Import Teachers successfully";
+
+})->name("scraping.teacher");
+

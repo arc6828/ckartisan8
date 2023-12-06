@@ -51,7 +51,7 @@ Route::get('/article', function(){
 });
 
 Route::get('/article/tagged/{tagname}', function($tagname){
-    $articles = Article::where('category','like',"%$tagname%")->get();
+    $articles = Article::where('category','like',"%$tagname%")->whereNotNull('credit')->get();
     return json_encode($articles, JSON_UNESCAPED_UNICODE);
 });
 
@@ -61,10 +61,12 @@ Route::get('/article/{id}', function($id){
     $latest = Article::orderBy('pubDate','desc')->limit(5)->get();
     $tag = json_decode($article->category)[0];
     $tagged = Article::where('category','like',"%$tag%")->orderBy('pubDate','desc')->limit(3)->get();
+    $teacher = $article->teacher;
     $article_set = [
         "article" => $article ,
         "latest" => $latest ,
         "tagged" => $tagged ,
+        "teacher" => $teacher ,
     ];
     return json_encode($article_set, JSON_UNESCAPED_UNICODE);
 });

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Article extends Model
+class Teacher extends Model
 {
     use HasFactory;
 
@@ -15,7 +15,7 @@ class Article extends Model
      *
      * @var string
      */
-    protected $table = 'articles';
+    protected $table = 'teachers';
 
     /**
     * The database primary key value.
@@ -29,10 +29,7 @@ class Article extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'link', 'guid', 'category', 'creator', 'pubDate', 'contentEncoded', 'image_url', 'first_paragraph', 'credit'];
+    protected $fillable = ['name', 'education', 'role', 'email', 'phone', 'image', 'office'];
 
-    public function teacher()
-    {
-        return $this->belongsTo(Teacher::class, 'credit','email');
-    }
+    
 }

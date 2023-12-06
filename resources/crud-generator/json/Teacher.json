@@ -1,0 +1,11 @@
+{
+    "fields": [
+        { "name": "name", "type": "string" },
+        { "name": "education", "type": "string" },
+        { "name": "role", "type": "string" },
+        { "name": "email", "type": "string" },
+        { "name": "phone", "type": "string" },
+        { "name": "image", "type": "string" },
+        { "name": "office", "type": "string" }
+    ]
+}
