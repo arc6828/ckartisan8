@@ -1,6 +1,8 @@
 <x-bootstrap title="Scraping Medium Feed">
     <section>
         <div class="container">
+
+            <h1 class="my-4">Scraping Medium Feed</h1>
             <form method="post" action="{{ route('scraping.medium-feed.store') }}">
                 @csrf
                 <div class="mb-3">

@@ -71,13 +71,20 @@ Route::post('scraping/medium-feed', function (Request $request) {
     $data = Medium::fetch($publication, $tagname);
 
     foreach ($data->channel->item as $item) {
+        if(!isset($item->category)){
+            $item->category = json_encode([]);
+        }else if(is_string($item->category)){
+            $item->category = json_encode([$item->category]);
+        }else{
+            $item->category = json_encode($item->category, JSON_UNESCAPED_UNICODE);
+        }
         Article::firstOrCreate(
             ['guid' => $item->guid],
             [
                 'title' => $item->title,
                 'link' => $item->link,
                 // 'guid' => $item->guid,
-                'category' => json_encode($item->category, JSON_UNESCAPED_UNICODE),
+                'category' => $item->category,
                 'creator' => $item->creator,
                 'pubDate' => date("Y-m-d H:i:s", strtotime($item->pubDate)),
                 'contentEncoded' => $item->contentEncoded,

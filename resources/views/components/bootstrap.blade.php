@@ -105,7 +105,7 @@
     </nav>
     <div class="container2">
 
-        <h1 class="my-4">{{ $title }}</h1>
+        
 
         {{ $slot }}
     </div>
