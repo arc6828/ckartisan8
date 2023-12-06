@@ -36,39 +36,47 @@ Route::prefix('medium')->group(function () {
 });
 
 // PROVINCE - AMPHOE - TAMBON
-Route::get('/provinces', [ TambonController::class , 'getProvinces' ]);
-Route::get('/amphoes', [TambonController::class , 'getAmphoes' ]);
-Route::get('/tambons', [ TambonController::class , 'getTambons' ]);
-Route::get('/zipcodes', [TambonController::class, 'getZipcodes'] );
+Route::get('/provinces', [TambonController::class, 'getProvinces']);
+Route::get('/amphoes', [TambonController::class, 'getAmphoes']);
+Route::get('/tambons', [TambonController::class, 'getTambons']);
+Route::get('/zipcodes', [TambonController::class, 'getZipcodes']);
 
 // https://3166-202-29-39-124.ngrok-free.app
 Route::apiResource('/mywongnai/webhook', WongnaiController::class);
 // Route::post('/mywongnai/webhook', [WongnaiController::class, 'store'] );
 
-Route::get('/article', function(){
+Route::get('/article', function () {
     $articles = Article::whereNotNull('credit')->get();
     return json_encode($articles, JSON_UNESCAPED_UNICODE);
 });
 
-Route::get('/article/tagged/{tagname}', function($tagname){
-    $articles = Article::where('category','like',"%$tagname%")->whereNotNull('credit')->get();
+Route::get('/article/tagged/{tagname}', function ($tagname) {
+    $articles = Article::whereNotNull('credit')
+        ->where('category', 'like', "%$tagname%")
+        ->orderBy('pubDate', 'desc')
+        ->get();
     return json_encode($articles, JSON_UNESCAPED_UNICODE);
 });
 
-Route::get('/article/{id}', function($id){
-    
+Route::get('/article/{id}', function ($id) {
+
     $article = Article::findOrFail($id);
-    $latest = Article::orderBy('pubDate','desc')->whereNotNull('credit')->limit(5)->get();
+    $latest = Article::whereNotNull('credit')
+        ->orderBy('pubDate', 'desc')
+        ->limit(5)
+        ->get();
     $tag = json_decode($article->category)[0];
-    $tagged = Article::where('category','like',"%$tag%")->orderBy('pubDate','desc')->whereNotNull('credit')->limit(3)->get();
+    $tagged = Article::whereNotNull('credit')
+        ->where('category', 'like', "%$tag%")
+        ->orderBy('pubDate', 'desc')
+        ->limit(3)
+        ->get();
     $teacher = $article->teacher;
     $article_set = [
-        "article" => $article ,
-        "latest" => $latest ,
-        "tagged" => $tagged ,
-        "teacher" => $teacher ,
+        "article" => $article,
+        "latest" => $latest,
+        "tagged" => $tagged,
+        "teacher" => $teacher,
     ];
     return json_encode($article_set, JSON_UNESCAPED_UNICODE);
 });
-
-
