@@ -45,6 +45,10 @@ Route::get('/zipcodes', [TambonController::class, 'getZipcodes'] );
 Route::apiResource('/mywongnai/webhook', WongnaiController::class);
 // Route::post('/mywongnai/webhook', [WongnaiController::class, 'store'] );
 
+Route::get('/article', function(){
+    $articles = Article::get();
+    return json_encode($articles, JSON_UNESCAPED_UNICODE);
+});
 
 Route::get('/article/tagged/{tagname}', function($tagname){
     $articles = Article::where('category','like',"%$tagname%")->get();
