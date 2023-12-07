@@ -87,9 +87,10 @@ Route::get('/article/{id}', function ($id) {
     $english_tag = count($english_tags) > 0 ? $english_tags[0] : $tags[0];
 
     $tagged = Article::whereNotNull('credit')
-        ->where('category', 'like', "%$english_tag%")
+        ->where('category', 'like', "%$english_tag%")        
+        ->where('id', '<>', $id)
         ->orderBy('pubDate', 'desc')
-        ->limit(3)
+        ->limit(5)
         ->get();
     $writer = $article->writer;
     $article_set = [
