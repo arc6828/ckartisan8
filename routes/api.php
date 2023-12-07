@@ -75,12 +75,14 @@ Route::get('/article/{id}', function ($id) {
 
     // english tags
     $english_tags = array_filter($tags, function ($item) {
-        return !preg_match('/[^A-Za-z0-9]/', $item);
+        return !preg_match('/[^A-Za-z0-9-]/', $item);
     });
     $english_tags = array_values($english_tags);
-    // print_r($english_tags);
+
+    print_r($tags);
+    print_r($english_tags);
     
-    // return ;
+    return ;
 
     $english_tag = count($english_tags) > 0 ? $english_tags[0] : $tags[0];
 
