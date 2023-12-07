@@ -35,4 +35,9 @@ class Article extends Model
     {
         return $this->belongsTo(Teacher::class, 'credit','email');
     }
+
+    public function writer()
+    {
+        return $this->belongsTo(Teacher::class, 'credit','email');
+    }
 }

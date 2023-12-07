@@ -81,7 +81,7 @@ class ArticleController extends Controller
 
         $article_set = json_decode(file_get_contents($url));
         $article = $article_set->article;
-        $latest = $article_set->latest;
+        $latest = $article_set->related;
         $tagged = $article_set->tagged;
 
         return view('article.show', compact('article','latest','tagged'));

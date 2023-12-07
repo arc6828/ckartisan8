@@ -63,22 +63,38 @@ Route::get('/article/tagged/{tagname}', function ($tagname) {
 Route::get('/article/{id}', function ($id) {
 
     $article = Article::findOrFail($id);
-    $latest = Article::whereNotNull('credit')
+
+    $related = Article::whereNotNull('credit')
+        ->where('credit', $article->credit)
+        ->where('id', '<>', $id)
         ->orderBy('pubDate', 'desc')
         ->limit(5)
         ->get();
-    $tag = json_decode($article->category)[0];
+    $tags = json_decode($article->category);
+
+
+    // english tags
+    $english_tags = array_filter($tags, function ($item) {
+        return !preg_match('/[^A-Za-z0-9]/', $item);
+    });
+    $english_tags = array_values($english_tags);
+    // print_r($english_tags);
+    
+    // return ;
+
+    $english_tag = count($english_tags) > 0 ? $english_tags[0] : $tags[0];
+
     $tagged = Article::whereNotNull('credit')
-        ->where('category', 'like', "%$tag%")
+        ->where('category', 'like', "%$english_tag%")
         ->orderBy('pubDate', 'desc')
         ->limit(3)
         ->get();
-    $teacher = $article->teacher;
+    $writer = $article->writer;
     $article_set = [
         "article" => $article,
-        "latest" => $latest,
+        "related" => $related,
         "tagged" => $tagged,
-        "teacher" => $teacher,
+        "writer" => $writer,
     ];
     return json_encode($article_set, JSON_UNESCAPED_UNICODE);
 });
