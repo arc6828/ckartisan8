@@ -5,6 +5,8 @@ use App\Http\Controllers\API\PublicationController;
 use App\Http\Controllers\API\TambonController;
 use App\Http\Controllers\API\WongnaiController;
 use App\Models\Article;
+use Illuminate\Database\Eloquent\Builder;
+// use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -62,7 +64,8 @@ Route::get('/article/tagged/{tagname}', function ($tagname) {
 
 Route::get('/article/{id}', function ($id) {
 
-    $article = Article::findOrFail($id);
+    // $article = Article::findOrFail($id);
+    $article = Article::where("id",$id)->orWhere("slug",$id)->firstOrFail();
 
     $related = Article::whereNotNull('credit')
         ->where('credit', $article->credit)
@@ -84,10 +87,16 @@ Route::get('/article/{id}', function ($id) {
     
     // return ;
 
-    $english_tag = count($english_tags) > 0 ? $english_tags[0] : $tags[0];
+    // $english_tag = count($english_tags) > 0 ? $english_tags[0] : $tags[0];
 
     $tagged = Article::whereNotNull('credit')
-        ->where('category', 'like', "%$english_tag%")        
+        ->where(function (Builder $query) use ($english_tags) {
+            foreach($english_tags as $tag)
+            {
+                $query->orWhere('category', 'like', "%$tag%");
+            }
+        })
+        // ->where('category', 'like', "%$english_tag%")        
         ->where('id', '<>', $id)
         ->orderBy('pubDate', 'desc')
         ->limit(5)
