@@ -29,7 +29,7 @@ class Article extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'link', 'guid', 'category', 'creator', 'pubDate', 'contentEncoded', 'image_url', 'first_paragraph', 'credit'];
+    protected $fillable = ['title', 'link', 'guid', 'category', 'creator', 'pubDate', 'contentEncoded', 'image_url', 'first_paragraph', 'credit', 'slug'];
 
     public function teacher()
     {

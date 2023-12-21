@@ -62,6 +62,20 @@ Route::get('/article/tagged/{tagname}', function ($tagname) {
     return json_encode($articles, JSON_UNESCAPED_UNICODE);
 });
 
+
+Route::get('/article/slug', function () {
+    $articles = Article::whereNull('slug')->get();
+
+    foreach($articles as $item){      
+        $requestData = ["slug"=>$item->id];
+        $item->update($requestData);
+        // echo "{$item->id} {$item->slug} <br>";
+        // $item->update(["slug"=>$item->id]);
+    }
+
+    return "Successfully updated";
+});
+
 Route::get('/article/{id}', function ($id) {
 
     // $article = Article::findOrFail($id);
@@ -110,3 +124,4 @@ Route::get('/article/{id}', function ($id) {
     ];
     return json_encode($article_set, JSON_UNESCAPED_UNICODE);
 });
+

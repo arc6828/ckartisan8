@@ -98,6 +98,13 @@ Route::post('scraping/medium-feed', function (Request $request) {
         // break;
     }
 
+    // update slug with id
+    $articles = Article::whereNull('slug')->get();
+    foreach($articles as $item){      
+        $requestData = ["slug"=>$item->id];
+        $item->update($requestData);
+    }
+
     return redirect()->route("scraping.medium-feed");
 })->name("scraping.medium-feed.store");
 
