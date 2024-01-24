@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\LocationController;
 use App\Http\Controllers\API\MediumController;
 use App\Http\Controllers\API\PublicationController;
 use App\Http\Controllers\API\TambonController;
@@ -125,3 +126,4 @@ Route::get('/article/{id}', function ($id) {
     return json_encode($article_set, JSON_UNESCAPED_UNICODE);
 });
 
+Route::apiResource('location', LocationController::class);
