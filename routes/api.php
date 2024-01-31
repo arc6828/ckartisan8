@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\FileController;
 use App\Http\Controllers\API\LocationController;
 use App\Http\Controllers\API\MediumController;
 use App\Http\Controllers\API\PublicationController;
@@ -67,8 +68,8 @@ Route::get('/article/tagged/{tagname}', function ($tagname) {
 Route::get('/article/slug', function () {
     $articles = Article::whereNull('slug')->get();
 
-    foreach($articles as $item){      
-        $requestData = ["slug"=>$item->id];
+    foreach ($articles as $item) {
+        $requestData = ["slug" => $item->id];
         $item->update($requestData);
         // echo "{$item->id} {$item->slug} <br>";
         // $item->update(["slug"=>$item->id]);
@@ -80,7 +81,7 @@ Route::get('/article/slug', function () {
 Route::get('/article/{id}', function ($id) {
 
     // $article = Article::findOrFail($id);
-    $article = Article::where("id",$id)->orWhere("slug",$id)->firstOrFail();
+    $article = Article::where("id", $id)->orWhere("slug", $id)->firstOrFail();
 
     $related = Article::whereNotNull('credit')
         ->where('credit', $article->credit)
@@ -99,15 +100,14 @@ Route::get('/article/{id}', function ($id) {
 
     // print_r($tags);
     // print_r($english_tags);
-    
+
     // return ;
 
     // $english_tag = count($english_tags) > 0 ? $english_tags[0] : $tags[0];
 
     $tagged = Article::whereNotNull('credit')
         ->where(function (Builder $query) use ($english_tags) {
-            foreach($english_tags as $tag)
-            {
+            foreach ($english_tags as $tag) {
                 $query->orWhere('category', 'like', "%$tag%");
             }
         })
@@ -127,3 +127,5 @@ Route::get('/article/{id}', function ($id) {
 });
 
 Route::apiResource('location', LocationController::class);
+
+Route::post('file', [FileController::class, 'upload']);
