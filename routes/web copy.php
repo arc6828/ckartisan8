@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\API\BookController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TeacherController;
@@ -136,12 +135,3 @@ Route::get('scraping/teacher', function () {
 
 })->name("scraping.teacher");
 
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
-require __DIR__.'/auth.php';
-
-
-Route::apiResource('book', BookController::class);
