@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\BookController;
 use App\Http\Controllers\API\FileController;
 use App\Http\Controllers\API\LocationController;
 use App\Http\Controllers\API\MediumController;
@@ -132,6 +133,7 @@ Route::apiResource('location', LocationController::class);
 
 Route::post('file', [FileController::class, 'upload']);
 
+Route::apiResource('book', BookController::class);
 
 Route::post('/sanctum/token', function (Request $request) {
     $user = User::where('email', $request->email)->first();
